@@ -15,7 +15,9 @@ export function Player() {
             <footer className={stytes.empty}>
                 <div className={stytes.progress}>
                     <span>00:00</span>
-                    <div className={stytes.emptySlider} />
+                    <div className={stytes.slider}>
+                        <div className={stytes.emptySlider} />
+                    </div>
                     <span>00:00</span>
                 </div>
 
