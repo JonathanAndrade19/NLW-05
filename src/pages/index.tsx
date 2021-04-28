@@ -4,22 +4,45 @@ import ptBR from "date-fns/locale/pt-BR";
 import { api } from "../services/api";
 import { convertDurationToTimeString } from "../../utils/convertDurationToTimeString";
 
+import styles from './home.module.scss';
+
 type Episode = {
-  id: string;
-  title: string;
-  members: string;
-  published_at: string;
+  id: string,
+  title: string,
+  thumbnail: string,
+  members: string,
+  publishedAt: string,
+  duration: string,
+  durationAsString: string,
+  description: string,
+  url: string
 }
 
 type HomeProps = {
-  episodes: Episode[];
+  latesEpisodes: Episode[];
+  allEpisodes: Episode[];
 }
 
-export default function Home(props: HomeProps) {
+export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
   return (
-    <div>
-      <h1>Index</h1>
-      <p>{JSON.stringify(props.episodes)}</p>
+    <div className={styles.homepage}>
+      <section className={styles.latesEpisodes}>
+        <h2>Ultimos Lançamentos</h2>
+
+        <ul>
+          {latesEpisodes.map(episode => {
+            return (
+              <li key={episode.id}>
+                <a href="">{ episode.title}</a>
+              </li>
+            )
+          })}
+        </ul>
+      </section>
+
+      <section className={styles.allEpisodes}>
+
+      </section>
     </div>
   )
 }
@@ -47,9 +70,13 @@ export const getStaticProps: GetStaticProps = async () => {
     };
   })
  
+  const latesEpisodes = episodes.slice(0, 2);
+  const allEpisodes = episodes.slice(2, episodes.length);
+
   return {
     props: {
-      episodes: data,
+      latesEpisodes,
+      allEpisodes
     },
     revalidate: 60 * 60 * 8,
   }
