@@ -59,7 +59,21 @@ export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
       </section>
 
       <section className={styles.allEpisodes}>
-
+        <h2>Todos Episódios</h2>
+        
+        <table cellSpacing={0}>
+          <thead>
+            <th></th>
+            <th>Podcast</th>
+            <th>Integrantes</th>
+            <th>Data</th>
+            <th>Duração</th>
+            <th></th>
+          </thead>
+          <tbody>
+            
+          </tbody>
+        </table>
       </section>
     </div>
   )
