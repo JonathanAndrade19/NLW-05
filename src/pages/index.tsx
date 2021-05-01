@@ -1,5 +1,6 @@
 import { GetStaticProps } from "next";
 import Image from "next/image";
+import Link from 'next/link';
 import { format, parseISO } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import { api } from "../services/api";
@@ -42,11 +43,13 @@ export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
                   objectFit="cover"
                 />
                 
-                <div className={ styles.episodeDetails }>
-                  <a href="">{episode.title}</a>
+                <div className={styles.episodeDetails}>
+                  <Link href={`/episodes/${episode.id}`}>
+                    <a>{episode.title}</a>
+                  </Link>
                   <p>{episode.members}</p>
-                  <span>{ episode.publishedAt }</span>
-                  <span>{ episode.durationAsString }</span>
+                  <span>{episode.publishedAt}</span>
+                  <span>{episode.durationAsString}</span>
                 </div>
 
                 <button type="button">
@@ -71,7 +74,30 @@ export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
             <th></th>
           </thead>
           <tbody>
-            
+            {allEpisodes.map(episode => {
+              return (
+                <tr key={episode.id}>
+                  <td style={{ width: 72 }}>
+                    <Image
+                      width={120}
+                      height={120}
+                      src={episode.thumbnail}
+                      alt={episode.title}
+                      objectFit="cover"
+                    />
+                  </td>
+                  <td>{episode.title}</td>
+                  <td>{episode.members}</td>
+                  <td style={{ width: 100 }}>{episode.publishedAt}</td>
+                  <td>{episode.durationAsString}</td>
+                  <td>
+                    <button type="button">
+                      <img src="/play-green.svg" alt="Tocar episódio" />
+                    </button>
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </section>
