@@ -9,14 +9,13 @@ import { convertDurationToTimeString } from "../../utils/convertDurationToTimeSt
 import styles from './home.module.scss';
 
 type Episode = {
-  id: string,
-  title: string,
-  thumbnail: string,
-  members: string,
-  publishedAt: string,
-  duration: string,
-  durationAsString: string,
-  description: string,
+  id: string;
+  title: string;
+  thumbnail: string;
+  members: string;
+  publishedAt: string;
+  duration: string;
+  durationAsString: string;
   url: string
 }
 
@@ -86,7 +85,11 @@ export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
                       objectFit="cover"
                     />
                   </td>
-                  <td>{episode.title}</td>
+                  <td>
+                    <Link href={`/episodes/${episode.id}`}>
+                      <a>{episode.title}</a>
+                    </Link>
+                  </td>
                   <td>{episode.members}</td>
                   <td style={{ width: 100 }}>{episode.publishedAt}</td>
                   <td>{episode.durationAsString}</td>
@@ -123,7 +126,6 @@ export const getStaticProps: GetStaticProps = async () => {
       publishedAt: format(parseISO(episode.published_at), 'd MMM yy', { locale: ptBR }),
       duration: Number(episode.file.duration),
       durationAsString: convertDurationToTimeString(Number(episode.file.duration)),
-      description: episode.description,
       url: episode.file.url,
     };
   })
