@@ -1,11 +1,16 @@
+import { useContext } from 'react';
+import { PlayerContext } from '../../contexts/PlayerContext';
 import stytes from './styles.module.scss';
 
 export function Player() {
+    const { episodeList, currentEpisodeIndex } = useContext(PlayerContext)
+    const episode = episodeList[currentEpisodeIndex]
+
     return (
         <div className={stytes.playerContainer}>
             <header>
                 <img src="/playing.svg" alt="Tocando Agora" />
-                <strong>Tocando Agora</strong>
+                <strong>Tocando Agora { episode?.title }</strong>
             </header>
 
             <div className={stytes.emptyPlayer}>
