@@ -1,6 +1,10 @@
-import { useContext } from 'react';
 import { PlayerContext } from '../../contexts/PlayerContext';
+import { useContext } from 'react';
+import Image from "next/image";
 import stytes from './styles.module.scss';
+
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 export function Player() {
     const { episodeList, currentEpisodeIndex } = useContext(PlayerContext)
@@ -10,18 +14,39 @@ export function Player() {
         <div className={stytes.playerContainer}>
             <header>
                 <img src="/playing.svg" alt="Tocando Agora" />
-                <strong>Tocando Agora { episode?.title }</strong>
+                <strong>Tocando Agora</strong>
             </header>
 
-            <div className={stytes.emptyPlayer}>
-                <strong>Selecione um podcast para ouvir</strong>
-            </div>
+            { episode ? (
+                <div className={stytes.currentEpisode}>
+                    <Image
+                        width={592}
+                        height={592}
+                        src={episode.thumbnail}
+                        objectFit="cover"
+                    />
+                    <strong>{episode.title}</strong>
+                    <span>{ episode.members }</span>
+                </div>
+            ) : (
+                <div className={stytes.emptyPlayer}>
+                    <strong>Selecione um podcast para ouvir</strong>
+                </div>
+            ) }
 
-            <footer className={stytes.empty}>
+            <footer className={!episode ? stytes.empty : ''}>
                 <div className={stytes.progress}>
                     <span>00:00</span>
                     <div className={stytes.slider}>
-                        <div className={stytes.emptySlider} />
+                        {episode ? (
+                            <Slider
+                                trackStyle={{ backgroundColor: '#84d361' }}
+                                railStyle={{ backgroundColor: '#9f75ff' }}
+                                handleStyle={{ borderColor: '#84d361', borderWidth: 4 }}
+                            />
+                        ): (
+                            <div className={stytes.emptySlider} />        
+                        ) }
                     </div>
                     <span>00:00</span>
                 </div>
